@@ -1,0 +1,20 @@
+{
+    "extends": "@workleap/typescript-configs/library.json",
+    "compilerOptions": {
+        "incremental": true,
+        "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+        "paths": {
+            "@squide/firefly-rsbuild-configs": ["../../../packages/firefly-rsbuild-configs/src/index.ts"]
+        }
+    },
+    "include": [
+        ".",
+        /**
+         * Since we are using module augmentation in the packages, and we use tsconfig paths to resolve the packages
+         * from this repo, we need to include the types folder in the packages to make sure the types are included
+         * in the build.
+        */
+        "../shell/types"
+    ],
+    "exclude": ["dist", "node_modules"]
+}
