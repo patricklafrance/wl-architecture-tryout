@@ -4,10 +4,10 @@ import { HttpResponse, http, type HttpHandler } from "msw";
 // A type annotation is necessary.
 export function getRickAndMortyHandlers(): HttpHandler[] {
     return [
-        http.get("/host/api/character/1,2", () => {
+        http.get("/management/api/character/1,2", () => {
             return HttpResponse.json([{
                 "id": 1,
-                "name": "Rick Sanchez - Host",
+                "name": "Rick Sanchez - Management",
                 "status": "Alive",
                 "species": "Human",
                 "type": "",

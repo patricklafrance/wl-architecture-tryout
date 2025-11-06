@@ -14,10 +14,10 @@ const activeModules = getActiveModules(process.env.MODULES);
 const fireflyRuntime = initializeFirefly({
     useMsw: !!process.env.USE_MSW,
     localModules: [registerShell, registerHost, ...activeModules],
-    startMsw: async () => {
+    startMsw: async runtime => {
         // Files that includes an import to the "msw" package are included dynamically to prevent adding
         // unused MSW stuff to the code bundles.
-        return (await import("./startMsw.ts")).startMsw(fireflyRuntime.requestHandlers);
+        return (await import("./startMsw.ts")).startMsw(runtime.requestHandlers);
     }
 });
 

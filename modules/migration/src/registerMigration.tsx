@@ -1,6 +1,16 @@
 import { FireflyRuntime, ModuleRegisterFunction } from "@squide/firefly";
 
-export const registerMigration: ModuleRegisterFunction<FireflyRuntime> = runtime => {
+async function registerMsw(runtime: FireflyRuntime) {
+    if (runtime.isMswEnabled) {
+        // Files including an import to the "msw" package are included dynamically to prevent adding
+        // MSW stuff to the bundle when it's not used.
+        const requestHandlers = (await import("./apiMocks/getRequestHandlers.ts")).getRequestHandlers();
+
+        runtime.registerRequestHandlers(requestHandlers);
+    }
+}
+
+function registerRoutes(runtime: FireflyRuntime) {
     runtime.registerRoute({
         path: "/migration",
         lazy: async () => {
@@ -16,4 +26,9 @@ export const registerMigration: ModuleRegisterFunction<FireflyRuntime> = runtime
         $label: "Migration",
         to: "/migration"
     });
+}
+
+export const registerMigration: ModuleRegisterFunction<FireflyRuntime> = async runtime => {
+    await registerMsw(runtime);
+    registerRoutes(runtime);
 };

@@ -13,11 +13,9 @@ export function HomePage() {
         return (await getJson("/host/api/character/1,2")).data as Character[];
     } });
 
-    console.log(characters);
-
     return (
         <Div>
-            <H2>HomePage</H2>
+            <H2>Home</H2>
             <Div>
                 {characters.map(x => {
                     return (
