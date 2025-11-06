@@ -24,6 +24,7 @@
         "@modules/management": "workspace:*",
         "@modules/migration": "workspace:*",
         "@opentelemetry/api": "1.9.0",
+        "@packages/core": "workspace:*",
         "@packages/shell": "workspace:*",
         "@squide/firefly": "15.0.5",
         "@tanstack/query-core": "5.90.5",
