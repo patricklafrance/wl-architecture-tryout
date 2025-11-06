@@ -1,5 +1,6 @@
 import { Div, H2, Text } from "@hopper-ui/components";
 import { getJson } from "@packages/core";
+import { useEnvironmentVariables } from "@squide/env-vars";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 interface Character {
@@ -9,8 +10,10 @@ interface Character {
 }
 
 export function HomePage() {
-    const { data: characters } = useSuspenseQuery({ queryKey: ["/host/api/character/1,2"], queryFn: async () => {
-        return (await getJson("/host/api/character/1,2")).data as Character[];
+    const environmentVariables = useEnvironmentVariables();
+
+    const { data: characters } = useSuspenseQuery({ queryKey: [`${environmentVariables.hostApiBaseUrl}/character/1,2`], queryFn: async () => {
+        return (await getJson(`${environmentVariables.hostApiBaseUrl}/character/1,2`)).data as Character[];
     } });
 
     return (

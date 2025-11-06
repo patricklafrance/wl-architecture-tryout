@@ -1,3 +1,4 @@
+export type { HomeEnvironmentVariables } from "./homeEnvironmentVariables.ts";
 export { getJson, postJson, type ApiClientGetBlobResponse, type ApiClientGetJsonResponse, type ApiClientOptions, type ApiClientPostJsonResponse } from "./http/apiClient.ts";
 export { ApiError, isApiError, type ApiErrorData } from "./http/ApiError.ts";
 export { fetchWithTimeout, type FetchWithTimeoutOptions } from "./http/fetchWithTimeout.ts";

@@ -1,6 +1,7 @@
 import "./index.css";
 
 import { registerShell } from "@packages/shell";
+import { EnvironmentVariablesPlugin, type EnvironmentVariables } from "@squide/env-vars";
 import { FireflyProvider, initializeFirefly } from "@squide/firefly";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -8,6 +9,12 @@ import { App } from "./App.tsx";
 import { getActiveModules } from "./getActiveModules.ts";
 import { QueryProvider } from "./QueryProvider.tsx";
 import { registerHost } from "./registerHost.tsx";
+
+const environmentVariables = {
+    hostApiBaseUrl: "/host/api",
+    managementApiBaseUrl: "/management/api",
+    migrationApiBaseUrl: "/migration/api"
+} satisfies EnvironmentVariables;
 
 const activeModules = getActiveModules(process.env.MODULES);
 
@@ -18,7 +25,12 @@ const fireflyRuntime = initializeFirefly({
         // Files that includes an import to the "msw" package are included dynamically to prevent adding
         // unused MSW stuff to the code bundles.
         return (await import("./startMsw.ts")).startMsw(runtime.requestHandlers);
-    }
+    },
+    plugins: [
+        x => new EnvironmentVariablesPlugin(x, {
+            environmentVariables
+        })
+    ]
 });
 
 const root = createRoot(document.getElementById("root")!);

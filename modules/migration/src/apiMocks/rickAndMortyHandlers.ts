@@ -1,10 +1,11 @@
+import { EnvironmentVariables } from "@squide/env-vars";
 import { HttpResponse, http, type HttpHandler } from "msw";
 
 // Must specify the return type, otherwise we get a TS2742: The inferred type cannot be named without a reference to X. This is likely not portable.
 // A type annotation is necessary.
-export function getRickAndMortyHandlers(): HttpHandler[] {
+export function getRickAndMortyHandlers(environmentVariables: EnvironmentVariables): HttpHandler[] {
     return [
-        http.get("/migration/api/character/1,2", () => {
+        http.get(`${environmentVariables.migrationApiBaseUrl}/character/1,2`, () => {
             return HttpResponse.json([{
                 "id": 1,
                 "name": "Rick Sanchez - Migration",
